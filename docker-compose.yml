@@ -1,0 +1,88 @@
+version: '2'
+services:
+ etcd-1:
+    hostname: etcd-1
+    container_name: etcd-1
+    ports:
+        - 2301:2379
+        - 2381:2380
+    networks:
+        - etcd
+    build:
+      context: .
+      dockerfile: etcd.docker
+    volumes:
+      - ./etcd1-data:/etcd-data
+    restart: always
+    command:
+        - /usr/bin/etcd
+        - --data-dir=/etcd-data
+        - --listen-client-urls=http://0.0.0.0:2379
+        - --advertise-client-urls=http://etcd-1:2379
+        - --listen-peer-urls=http://0.0.0.0:2380
+        - --initial-advertise-peer-urls=http://etcd-1:2380
+        - --initial-cluster=etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380
+        - --initial-cluster-token=etcd-token
+        - --initial-cluster-state=new
+        - --auto-compaction-retention=1
+        - --name=etcd-1
+    deploy:
+        replicas: 1
+ etcd-2:
+    hostname: etcd-2
+    container_name: etcd-2
+    ports:
+        - 2302:2379
+        - 2382:2380
+    networks:
+        - etcd
+    build:
+      context: .
+      dockerfile: etcd.docker
+    volumes:
+      - ./etcd2-data:/etcd-data
+    restart: always
+    command:
+        - /usr/bin/etcd
+        - --data-dir=/etcd-data
+        - --listen-client-urls=http://0.0.0.0:2379
+        - --advertise-client-urls=http://etcd-2:2379
+        - --listen-peer-urls=http://0.0.0.0:2380
+        - --initial-advertise-peer-urls=http://etcd-2:2380
+        - --initial-cluster=etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380
+        - --initial-cluster-token=etcd-token
+        - --initial-cluster-state=new
+        - --auto-compaction-retention=1
+        - --name=etcd-2
+    deploy:
+        replicas: 1
+ etcd-3:
+    hostname: etcd-3
+    container_name: etcd-3
+    ports:
+        - 2303:2379
+        - 2383:2380
+    networks:
+        - etcd
+    build:
+      context: .
+      dockerfile: etcd.docker
+    volumes:
+      - ./etcd3-data:/etcd-data
+    restart: always
+    command:
+        - /usr/bin/etcd
+        - --data-dir=/etcd-data
+        - --listen-client-urls=http://0.0.0.0:2379
+        - --advertise-client-urls=http://etcd-3:2379
+        - --listen-peer-urls=http://0.0.0.0:2380
+        - --initial-advertise-peer-urls=http://etcd-3:2380
+        - --initial-cluster=etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380
+        - --initial-cluster-token=etcd-token
+        - --initial-cluster-state=new
+        - --auto-compaction-retention=1
+        - --name=etcd-3
+    deploy:
+        replicas: 1
+networks:
+   etcd:
