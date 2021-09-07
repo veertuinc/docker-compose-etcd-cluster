@@ -8,9 +8,7 @@ services:
         - 2381:2380
     networks:
         - etcd
-    build:
-      context: .
-      dockerfile: etcd.docker
+    image: veertu/anka-build-cloud-etcd:latest
     volumes:
       - ./etcd1-data:/etcd-data
     restart: always
@@ -36,9 +34,7 @@ services:
         - 2382:2380
     networks:
         - etcd
-    build:
-      context: .
-      dockerfile: etcd.docker
+    image: veertu/anka-build-cloud-etcd:latest
     volumes:
       - ./etcd2-data:/etcd-data
     restart: always
@@ -64,9 +60,7 @@ services:
         - 2383:2380
     networks:
         - etcd
-    build:
-      context: .
-      dockerfile: etcd.docker
+    image: veertu/anka-build-cloud-etcd:latest
     volumes:
       - ./etcd3-data:/etcd-data
     restart: always

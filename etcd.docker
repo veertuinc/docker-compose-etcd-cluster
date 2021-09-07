@@ -1,6 +1,0 @@
-FROM centos:7
-MAINTAINER Veertu Inc. "support@veertu.com"
-RUN rm -rf /var/cache/yum/*;yum -y update; yum clean all;
-RUN yum -y install wget gzip tar;
-COPY bin/etcd-v3.4.14 /usr/bin/etcd
-COPY bin/etcdctl-v3.4.14 /usr/bin/etcdctl
